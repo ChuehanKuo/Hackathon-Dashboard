@@ -47,6 +47,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        activity: {
+          setup: "hsl(var(--activity-setup))",
+          session: "hsl(var(--activity-session))",
+          break: "hsl(var(--activity-break))",
+          critical: "hsl(var(--activity-critical))",
+          pitch: "hsl(var(--activity-pitch))",
+          networking: "hsl(var(--activity-networking))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
