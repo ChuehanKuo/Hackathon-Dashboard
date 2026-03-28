@@ -6,7 +6,7 @@ const container = {
 };
 const item = {
   hidden: { opacity: 0, y: 12, scale: 0.97 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: "easeOut" as const } },
 };
 
 const roles = [
