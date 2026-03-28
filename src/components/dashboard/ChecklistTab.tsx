@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FileText, Monitor, Coffee } from "lucide-react";
+import { FileText, Monitor, Coffee, CheckCircle2 } from "lucide-react";
 
 interface ChecklistSection {
   title: string;
@@ -12,7 +13,7 @@ interface ChecklistSection {
 const sections: ChecklistSection[] = [
   {
     title: "文件 / 印刷品",
-    icon: <FileText className="h-4 w-4" />,
+    icon: <FileText className="h-4 w-4 text-activity-session" />,
     items: [
       "名牌（137 + 備用），按 4 組號碼分裝",
       "參賽者手冊（時程 + 評分標準 + WiFi + 聯絡方式）",
@@ -25,7 +26,7 @@ const sections: ChecklistSection[] = [
   },
   {
     title: "AV 設備",
-    icon: <Monitor className="h-4 w-4" />,
+    icon: <Monitor className="h-4 w-4 text-activity-pitch" />,
     items: [
       "主筆電 + 充電器",
       "備用筆電 + 充電器",
@@ -39,7 +40,7 @@ const sections: ChecklistSection[] = [
   },
   {
     title: "餐飲",
-    icon: <Coffee className="h-4 w-4" />,
+    icon: <Coffee className="h-4 w-4 text-activity-break" />,
     items: [
       "咖啡/茶 + 點心（走廊，兩天）",
       "杯子、餐巾紙",
@@ -49,6 +50,15 @@ const sections: ChecklistSection[] = [
 ];
 
 const STORAGE_KEY = "hsil-checklist";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+};
+const cardItem = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+};
 
 const ChecklistTab = () => {
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
@@ -70,55 +80,82 @@ const ChecklistTab = () => {
 
   const totalItems = sections.reduce((acc, s) => acc + s.items.length, 0);
   const checkedCount = Object.values(checked).filter(Boolean).length;
+  const progress = (checkedCount / totalItems) * 100;
+  const allDone = checkedCount === totalItems;
 
   return (
-    <div className="max-w-2xl mx-auto space-y-4">
+    <motion.div variants={container} initial="hidden" animate="show" className="max-w-2xl mx-auto space-y-5">
       {/* Progress */}
-      <div className="flex items-center gap-3 text-sm text-muted-foreground">
-        <div className="flex-1 h-2 bg-accent rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary rounded-full transition-all duration-300"
-            style={{ width: `${(checkedCount / totalItems) * 100}%` }}
+      <motion.div variants={cardItem} className="glass-card rounded-xl p-4">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            {allDone ? (
+              <CheckCircle2 className="h-5 w-5 text-activity-setup" />
+            ) : (
+              <div className="h-5 w-5 rounded-full border-2 border-primary/30 flex items-center justify-center text-[10px] font-bold text-primary">
+                {Math.round(progress)}
+              </div>
+            )}
+            <span className="text-sm font-medium">
+              {allDone ? "全部完成！🎉" : "準備進度"}
+            </span>
+          </div>
+          <span className="text-sm font-mono text-muted-foreground">{checkedCount}/{totalItems}</span>
+        </div>
+        <div className="h-2 bg-accent rounded-full overflow-hidden">
+          <motion.div
+            className="h-full rounded-full bg-gradient-to-r from-primary to-activity-setup"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           />
         </div>
-        <span className="font-mono">{checkedCount}/{totalItems}</span>
-      </div>
+      </motion.div>
 
       {sections.map((section) => (
-        <Card key={section.title} className="bg-card">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base flex items-center gap-2">
-              {section.icon}
-              {section.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {section.items.map((item) => {
-              const key = `${section.title}-${item}`;
-              return (
-                <label
-                  key={key}
-                  className="flex items-start gap-3 cursor-pointer group py-1"
-                >
-                  <Checkbox
-                    checked={!!checked[key]}
-                    onCheckedChange={() => toggleItem(key)}
-                    className="mt-0.5"
-                  />
-                  <span
-                    className={`text-sm transition-colors ${
-                      checked[key] ? "line-through text-muted-foreground/50" : "text-foreground"
-                    }`}
+        <motion.div key={section.title} variants={cardItem}>
+          <Card className="glass-card overflow-hidden">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-base flex items-center gap-2">
+                {section.icon}
+                {section.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-1">
+              {section.items.map((item, i) => {
+                const key = `${section.title}-${item}`;
+                const isChecked = !!checked[key];
+                return (
+                  <motion.label
+                    key={key}
+                    className="flex items-start gap-3 cursor-pointer group py-2 px-2 rounded-lg hover:bg-accent/30 transition-colors"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + i * 0.03 }}
+                    whileTap={{ scale: 0.99 }}
                   >
-                    {item}
-                  </span>
-                </label>
-              );
-            })}
-          </CardContent>
-        </Card>
+                    <Checkbox
+                      checked={isChecked}
+                      onCheckedChange={() => toggleItem(key)}
+                      className="mt-0.5 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                    />
+                    <span
+                      className={`text-sm transition-all duration-300 ${
+                        isChecked
+                          ? "line-through text-muted-foreground/40"
+                          : "text-foreground"
+                      }`}
+                    >
+                      {item}
+                    </span>
+                  </motion.label>
+                );
+              })}
+            </CardContent>
+          </Card>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
