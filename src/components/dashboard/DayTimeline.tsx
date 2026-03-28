@@ -5,7 +5,7 @@ const DayTimeline = ({ items }: { items: TimelineItem[] }) => {
   return (
     <div className="max-w-2xl mx-auto">
       {items.map((item, i) => (
-        <TimelineCard key={i} item={item} />
+        <TimelineCard key={i} item={item} index={i} />
       ))}
     </div>
   );
