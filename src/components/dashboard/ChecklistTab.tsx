@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FileText, Monitor, Coffee, CheckCircle2 } from "lucide-react";
+import { FileText, Monitor, Coffee, PartyPopper } from "lucide-react";
 
 interface ChecklistSection {
   title: string;
@@ -13,38 +12,38 @@ interface ChecklistSection {
 const sections: ChecklistSection[] = [
   {
     title: "文件 / 印刷品",
-    icon: <FileText className="h-4 w-4 text-activity-session" />,
+    icon: <FileText className="h-3.5 w-3.5 text-activity-session" />,
     items: [
-      "名牌（137 + 備用），按 4 組號碼分裝",
-      "參賽者手冊（時程 + 評分標準 + WiFi + 聯絡方式）",
+      "名牌（137 + 備用）按 4 組分裝",
+      "參賽者手冊",
       "團隊登記表",
-      "紙本評分表（每隊 1 張 × 4 評審 = ~170 張）",
+      "紙本評分表 ~170 張",
       "簡報順序看板",
-      "證書：參賽者（Day 1 後印）、獲獎模板（3 份）",
-      "指示牌：捷運→大樓→201→用餐教室、WiFi、時程表、「簡報 12:00 截止」",
+      "證書模板",
+      "指示牌（全套）",
     ],
   },
   {
     title: "AV 設備",
-    icon: <Monitor className="h-4 w-4 text-activity-pitch" />,
+    icon: <Monitor className="h-3.5 w-3.5 text-activity-pitch" />,
     items: [
       "主筆電 + 充電器",
       "備用筆電 + 充電器",
-      "HDMI + USB-C 轉接頭",
-      "無線麥克風 + 備用電池",
-      "可攜式音響（備用）",
-      "計時器顯示裝置",
-      "USB 隨身碟（簡報備份）",
+      "HDMI + USB-C 轉接",
+      "無線麥克風 + 電池",
+      "可攜式音響",
+      "計時器",
+      "USB 隨身碟",
       "延長線 + 多孔插座",
     ],
   },
   {
     title: "餐飲",
-    icon: <Coffee className="h-4 w-4 text-activity-break" />,
+    icon: <Coffee className="h-3.5 w-3.5 text-activity-break" />,
     items: [
-      "咖啡/茶 + 點心（走廊，兩天）",
-      "杯子、餐巾紙",
-      "午餐由參賽者自行安排",
+      "咖啡/茶 + 點心",
+      "杯子 · 餐巾紙",
+      "午餐自行安排（確認）",
     ],
   },
 ];
@@ -53,11 +52,11 @@ const STORAGE_KEY = "hsil-checklist";
 
 const container = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
 };
-const cardItem = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+const cardAnim = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
 };
 
 const ChecklistTab = () => {
@@ -84,66 +83,65 @@ const ChecklistTab = () => {
   const allDone = checkedCount === totalItems;
 
   return (
-    <motion.div variants={container} initial="hidden" animate="show" className="max-w-2xl mx-auto space-y-5">
-      {/* Progress */}
-      <motion.div variants={cardItem} className="glass-card rounded-xl p-4">
-        <div className="flex items-center justify-between mb-3">
+    <motion.div variants={container} initial="hidden" animate="show" className="max-w-2xl mx-auto space-y-4">
+      {/* Progress bar */}
+      <motion.div variants={cardAnim} className="rounded-xl glass-card-strong p-4">
+        <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            {allDone ? (
-              <CheckCircle2 className="h-5 w-5 text-activity-setup" />
-            ) : (
-              <div className="h-5 w-5 rounded-full border-2 border-primary/30 flex items-center justify-center text-[10px] font-bold text-primary">
-                {Math.round(progress)}
-              </div>
-            )}
-            <span className="text-sm font-medium">
-              {allDone ? "全部完成！🎉" : "準備進度"}
+            {allDone && <PartyPopper className="h-4 w-4 text-activity-break" />}
+            <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+              {allDone ? "ALL CLEAR" : "PREP STATUS"}
             </span>
           </div>
-          <span className="text-sm font-mono text-muted-foreground">{checkedCount}/{totalItems}</span>
+          <span className="font-mono text-sm font-bold text-primary">{Math.round(progress)}%</span>
         </div>
-        <div className="h-2 bg-accent rounded-full overflow-hidden">
+        <div className="h-1.5 bg-accent/50 rounded-full overflow-hidden">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-primary to-activity-setup"
+            className="h-full rounded-full bg-gradient-to-r from-primary via-activity-session to-activity-setup"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           />
         </div>
+        <p className="font-mono text-[10px] text-muted-foreground mt-1.5">{checkedCount}/{totalItems} items</p>
       </motion.div>
 
-      {sections.map((section) => (
-        <motion.div key={section.title} variants={cardItem}>
-          <Card className="glass-card overflow-hidden">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base flex items-center gap-2">
+      {sections.map((section) => {
+        const sectionChecked = section.items.filter(
+          (it) => checked[`${section.title}-${it}`]
+        ).length;
+
+        return (
+          <motion.div key={section.title} variants={cardAnim} className="rounded-xl glass-card overflow-hidden">
+            <div className="px-4 py-3 flex items-center justify-between border-b border-border/20">
+              <div className="flex items-center gap-2">
                 {section.icon}
-                {section.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-1">
+                <span className="text-sm font-semibold tracking-tight">{section.title}</span>
+              </div>
+              <span className="font-mono text-[10px] text-muted-foreground">
+                {sectionChecked}/{section.items.length}
+              </span>
+            </div>
+            <div className="p-2">
               {section.items.map((item, i) => {
                 const key = `${section.title}-${item}`;
                 const isChecked = !!checked[key];
                 return (
                   <motion.label
                     key={key}
-                    className="flex items-start gap-3 cursor-pointer group py-2 px-2 rounded-lg hover:bg-accent/30 transition-colors"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + i * 0.03 }}
-                    whileTap={{ scale: 0.99 }}
+                    className="flex items-center gap-3 cursor-pointer py-2 px-2 rounded-lg hover:bg-accent/20 transition-colors"
+                    whileTap={{ scale: 0.985 }}
                   >
                     <Checkbox
                       checked={isChecked}
                       onCheckedChange={() => toggleItem(key)}
-                      className="mt-0.5 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                      className="data-[state=checked]:bg-primary data-[state=checked]:border-primary shrink-0"
                     />
                     <span
                       className={`text-sm transition-all duration-300 ${
                         isChecked
-                          ? "line-through text-muted-foreground/40"
-                          : "text-foreground"
+                          ? "line-through text-muted-foreground/30"
+                          : "text-foreground/80"
                       }`}
                     >
                       {item}
@@ -151,10 +149,10 @@ const ChecklistTab = () => {
                   </motion.label>
                 );
               })}
-            </CardContent>
-          </Card>
-        </motion.div>
-      ))}
+            </div>
+          </motion.div>
+        );
+      })}
     </motion.div>
   );
 };
