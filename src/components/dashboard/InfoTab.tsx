@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Phone, Wifi, MapPin, Link2, AlertTriangle, Building2, Radio, ExternalLink } from "lucide-react";
+import { Phone, Wifi, MapPin, Link2, AlertTriangle, Building2, ExternalLink } from "lucide-react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -41,14 +41,6 @@ const keyLinks = [
   { label: "HSIL 官網", url: "https://hsph.harvard.edu/research/health-systems-innovation-lab/", note: "" },
 ];
 
-const codewords = [
-  { code: "CLOCK", meaning: "進度落後 — 加快轉場", color: "text-amber-400" },
-  { code: "WELCOME", meaning: "報到桌需要支援", color: "text-sky-400" },
-  { code: "SPOTLIGHT", meaning: "AV 問題 — 技術人員速來", color: "text-violet-400" },
-  { code: "COFFEE", meaning: "餐飲問題 — 後勤速來", color: "text-emerald-400" },
-  { code: "BAND-AID", meaning: "輕微醫療狀況 — 帶急救包", color: "text-cyan-400" },
-  { code: "RED", meaning: "嚴重緊急狀況 — 全員就位", color: "text-rose-400" },
-];
 
 const InfoTab = () => {
   return (
@@ -143,22 +135,6 @@ const InfoTab = () => {
         </div>
       </motion.div>
 
-      {/* Codewords */}
-      <motion.div variants={item} className="rounded-xl glass-card overflow-hidden">
-        <div className="px-4 py-3 flex items-center gap-2 border-b border-border/20">
-          <Radio className="h-3.5 w-3.5 text-cyan-400" />
-          <span className="font-mono text-[10px] text-cyan-400 tracking-[0.15em] uppercase">CODEWORDS</span>
-          <span className="text-[9px] text-muted-foreground ml-1">（群組暗號，勿讓參賽者聽到）</span>
-        </div>
-        <div className="p-3 grid grid-cols-2 gap-1.5">
-          {codewords.map((c, i) => (
-            <div key={i} className="flex items-center gap-2 px-2 py-2 rounded-lg bg-card/40 border border-border/20">
-              <span className={`font-mono text-xs font-bold ${c.color}`}>{c.code}</span>
-              <span className="text-[10px] text-muted-foreground">{c.meaning}</span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
 
       {/* Venue Address */}
       <motion.div variants={item} className="rounded-xl glass-card p-4">
@@ -171,20 +147,6 @@ const InfoTab = () => {
         <p className="text-[10px] text-muted-foreground mt-0.5">捷運公館站 → 步行約 10 分鐘</p>
       </motion.div>
 
-      {/* Nearby Food */}
-      <motion.div variants={item} className="rounded-xl glass-card p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="text-base">🍜</span>
-          <span className="font-mono text-[10px] text-amber-400 tracking-[0.15em] uppercase">NEARBY FOOD</span>
-          <span className="text-[9px] text-muted-foreground ml-1">（參賽者會問）</span>
-        </div>
-        <div className="space-y-1.5 text-xs text-muted-foreground">
-          <p>• 7-11 / 全家 — 羅斯福路上，步行 3 分鐘</p>
-          <p>• 公館商圈 — 步行 5–10 分鐘，各類餐廳</p>
-          <p>• 台大學生餐廳（小福） — 步行 8 分鐘</p>
-          <p>• Foodpanda / Uber Eats — 可外送至大樓門口</p>
-        </div>
-      </motion.div>
 
       {/* First Aid */}
       <motion.div variants={item} className="rounded-xl glass-card p-4">
