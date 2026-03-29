@@ -6,6 +6,8 @@ import OverviewTab from "@/components/dashboard/OverviewTab";
 import DayTimeline from "@/components/dashboard/DayTimeline";
 import RolesTab from "@/components/dashboard/RolesTab";
 import ChecklistTab from "@/components/dashboard/ChecklistTab";
+import InfoTab from "@/components/dashboard/InfoTab";
+import RulesTab from "@/components/dashboard/RulesTab";
 import { day1Schedule, day2Schedule } from "@/data/schedule";
 
 const tabs = [
@@ -13,6 +15,8 @@ const tabs = [
   { value: "day1", label: "Day 1" },
   { value: "day2", label: "Day 2" },
   { value: "roles", label: "角色" },
+  { value: "rules", label: "規則" },
+  { value: "info", label: "資訊" },
   { value: "checklist", label: "清單" },
 ];
 
@@ -25,6 +29,8 @@ const Index = () => {
       case "day1": return <DayTimeline items={day1Schedule} />;
       case "day2": return <DayTimeline items={day2Schedule} />;
       case "roles": return <RolesTab />;
+      case "rules": return <RulesTab />;
+      case "info": return <InfoTab />;
       case "checklist": return <ChecklistTab />;
       default: return null;
     }
