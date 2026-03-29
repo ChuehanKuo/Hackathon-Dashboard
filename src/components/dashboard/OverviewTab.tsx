@@ -356,19 +356,92 @@ const OverviewTab = () => {
       {/* PRE-EVENT VIEW */}
       {eventDay === "pre" && (
         <>
-          {/* Countdown */}
-          <motion.div variants={item} className="grid grid-cols-3 gap-2">
-            {[
-              { value: countdown.days, label: "天" },
-              { value: countdown.hours, label: "時" },
-              { value: countdown.mins, label: "分" },
-            ].map((c, i) => (
-              <div key={i} className="rounded-xl glass-card p-4 text-center">
-                <Timer className="h-3 w-3 text-primary mx-auto mb-1" />
-                <p className="text-3xl font-bold font-mono gradient-text">{c.value}</p>
-                <p className="text-[9px] text-muted-foreground font-mono tracking-wider uppercase">{c.label}</p>
+          {/* Countdown — hero block */}
+          <motion.div variants={item} className="relative rounded-2xl glass-card-strong overflow-hidden">
+            {/* Animated gradient border */}
+            <div className="absolute inset-0 rounded-2xl p-px bg-gradient-to-br from-primary/40 via-activity-pitch/30 to-activity-networking/40 -z-[1]" style={{ animation: "spin 8s linear infinite", backgroundSize: "200% 200%" }} />
+            
+            {/* Orbiting particles */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              {[0, 1, 2, 3, 4, 5].map(i => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 rounded-full bg-primary/60"
+                  style={{
+                    top: `${15 + Math.random() * 70}%`,
+                    left: `${10 + Math.random() * 80}%`,
+                  }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.5, 0],
+                    y: [0, -30 - Math.random() * 30],
+                  }}
+                  transition={{
+                    duration: 2.5 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: i * 0.6,
+                    ease: "easeOut",
+                  }}
+                />
+              ))}
+            </div>
+
+            <div className="relative z-10 p-6 pb-5">
+              {/* Label */}
+              <div className="flex items-center justify-center gap-2 mb-5">
+                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/30" />
+                <span className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary/80 flex items-center gap-1.5">
+                  <Timer className="h-3 w-3" />
+                  LAUNCH IN
+                </span>
+                <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/30" />
               </div>
-            ))}
+
+              {/* Digit cards */}
+              <div className="flex items-center justify-center gap-3">
+                {[
+                  { value: countdown.days, label: "DAYS", color: "from-primary to-activity-session" },
+                  { value: countdown.hours, label: "HRS", color: "from-activity-pitch to-primary" },
+                  { value: countdown.mins, label: "MIN", color: "from-activity-networking to-activity-pitch" },
+                ].map((c, i) => (
+                  <motion.div
+                    key={i}
+                    className="relative group"
+                    whileHover={{ scale: 1.05, y: -4 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  >
+                    {/* Glow behind card */}
+                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-b ${c.color} opacity-15 blur-xl group-hover:opacity-30 transition-opacity duration-500`} />
+                    
+                    <div className="relative rounded-2xl glass-card stat-glow px-5 sm:px-8 py-4 sm:py-5 text-center min-w-[80px] sm:min-w-[100px]">
+                      {/* Top shine line */}
+                      <div className="absolute top-0 left-3 right-3 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+                      
+                      <motion.p
+                        key={c.value}
+                        initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        className="text-4xl sm:text-5xl font-bold font-mono gradient-text leading-none"
+                      >
+                        {String(c.value).padStart(2, "0")}
+                      </motion.p>
+                      <p className="text-[9px] text-muted-foreground font-mono tracking-[0.2em] mt-2">{c.label}</p>
+                    </div>
+                  </motion.div>
+                ))}
+
+                {/* Separators */}
+              </div>
+
+              {/* Target date */}
+              <motion.p
+                className="text-center text-[11px] text-muted-foreground/60 font-mono mt-4 tracking-wider"
+                animate={{ opacity: [0.4, 0.8, 0.4] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
+                2026 / 04 / 10 — 07:00 TST
+              </motion.p>
+            </div>
           </motion.div>
 
           {/* Stats */}
@@ -379,11 +452,15 @@ const OverviewTab = () => {
               { value: "3-4", label: "評審", icon: CheckCircle2 },
               { value: "3", label: "導師", icon: Zap },
             ].map((s, i) => (
-              <div key={i} className="rounded-lg bg-card p-2.5 text-center">
-                <s.icon className="h-3 w-3 text-primary mx-auto mb-1" />
-                <p className="text-lg font-bold tracking-tighter">{s.value}</p>
+              <motion.div
+                key={i}
+                whileHover={{ y: -2, scale: 1.03 }}
+                className="rounded-xl glass-card stat-glow p-3 text-center card-hover"
+              >
+                <s.icon className="h-3.5 w-3.5 text-primary mx-auto mb-1.5" />
+                <p className="text-lg font-bold tracking-tighter gradient-text">{s.value}</p>
                 <p className="text-[8px] text-muted-foreground font-mono tracking-wider uppercase">{s.label}</p>
-              </div>
+              </motion.div>
             ))}
           </motion.div>
 
