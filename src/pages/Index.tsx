@@ -9,7 +9,7 @@ import ChecklistTab from "@/components/dashboard/ChecklistTab";
 import { day1Schedule, day2Schedule } from "@/data/schedule";
 
 const tabs = [
-  { value: "overview", label: "總覽" },
+  { value: "overview", label: "現在" },
   { value: "day1", label: "Day 1" },
   { value: "day2", label: "Day 2" },
   { value: "roles", label: "角色" },
