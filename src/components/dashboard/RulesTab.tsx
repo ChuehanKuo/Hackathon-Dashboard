@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Scale, Users, Presentation, Brain, Shield, FileText } from "lucide-react";
+import { Scale, Users, Presentation, Brain, Shield, FileText, Building2, ClipboardCheck, UserMinus } from "lucide-react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -171,6 +171,76 @@ const RulesTab = () => {
         </div>
         <div className="p-3 space-y-1">
           {certificateInfo.map((r, i) => (
+            <div key={i} className="flex items-start gap-2 px-2 py-1.5">
+              <span className="text-amber-400 text-xs mt-0.5">•</span>
+              <span className="text-xs text-foreground/80">{r}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+      {/* Divider */}
+      <motion.div variants={item} className="flex items-center gap-3 pt-2">
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        <span className="font-mono text-[10px] text-primary tracking-[0.2em] uppercase">台灣站規則</span>
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      </motion.div>
+
+      {/* Operations */}
+      <motion.div variants={item} className="rounded-xl glass-card-strong overflow-hidden">
+        <div className="px-4 py-3 flex items-center gap-2 border-b border-border/20">
+          <Building2 className="h-3.5 w-3.5 text-rose-400" />
+          <span className="font-mono text-[10px] text-rose-400 tracking-[0.15em] uppercase">活動營運 OPS</span>
+        </div>
+        <div className="p-3 space-y-1">
+          {[
+            "201 講堂禁止飲食，午餐在 60 人教室",
+            "簡報截止：Day 2 12:00（HARD DEADLINE）",
+            "報到方式：4 組號碼牌（#1-35, #36-70, #71-105, #106-137）",
+            "評分方式：紙本評分表，2 名工作人員手動統計",
+            "簡報順序：Day 1 傍晚抽籤決定",
+            "評審回饋：所有簡報結束後 10 分鐘綜合回饋",
+          ].map((r, i) => (
+            <div key={i} className="flex items-start gap-2 px-2 py-1.5">
+              <span className="text-rose-400 text-xs mt-0.5">•</span>
+              <span className="text-xs text-foreground/80">{r}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Attendance & Certificate */}
+      <motion.div variants={item} className="rounded-xl glass-card overflow-hidden">
+        <div className="px-4 py-3 flex items-center gap-2 border-b border-border/20">
+          <ClipboardCheck className="h-3.5 w-3.5 text-emerald-400" />
+          <span className="font-mono text-[10px] text-emerald-400 tracking-[0.15em] uppercase">出席與證書</span>
+        </div>
+        <div className="p-3 space-y-1">
+          {[
+            "4 次簽到（Day 1 上午/下午、Day 2 上午/下午）完成 3 次 = 可獲 HSIL 證書",
+            "不限哪 3 次，由參賽者依自身時間安排",
+            "不強制觀看所有簡報（隊友可代表上台）",
+            "缺席需事先通知團隊和主辦方",
+          ].map((r, i) => (
+            <div key={i} className="flex items-start gap-2 px-2 py-1.5">
+              <span className="text-emerald-400 text-xs mt-0.5">•</span>
+              <span className="text-xs text-foreground/80">{r}</span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Team Changes */}
+      <motion.div variants={item} className="rounded-xl glass-card overflow-hidden">
+        <div className="px-4 py-3 flex items-center gap-2 border-b border-border/20">
+          <UserMinus className="h-3.5 w-3.5 text-amber-400" />
+          <span className="font-mono text-[10px] text-amber-400 tracking-[0.15em] uppercase">團隊變動規則</span>
+        </div>
+        <div className="p-3 space-y-1">
+          {[
+            "Day 1 結束（17:30）後團隊定案 — Day 2 不可更動",
+            "Day 1 有人退出 → 可替補新成員",
+            "Day 2 退出 → 不替補，團隊以現有成員繼續",
+          ].map((r, i) => (
             <div key={i} className="flex items-start gap-2 px-2 py-1.5">
               <span className="text-amber-400 text-xs mt-0.5">•</span>
               <span className="text-xs text-foreground/80">{r}</span>
