@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Phone, Wifi, MapPin, Link2, AlertTriangle, Building2, ExternalLink } from "lucide-react";
+import { Phone, Wifi, MapPin, Link2, AlertTriangle, Building2, ExternalLink, Award, GraduationCap } from "lucide-react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -79,6 +79,58 @@ const InfoTab = () => {
           ))}
         </div>
       </motion.div>
+
+      {/* Judges & Mentors */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <motion.div variants={item} className="rounded-xl glass-card overflow-hidden">
+          <div className="px-4 py-3 flex items-center gap-2 border-b border-border/20">
+            <Award className="h-3.5 w-3.5 text-violet-400" />
+            <span className="font-mono text-[10px] text-violet-400 tracking-[0.15em] uppercase">評審 · Day 2</span>
+          </div>
+          <div className="p-3 space-y-2">
+            {[
+              { name: "李達宇", role: "NTU 健管所教授", note: "學術共同主辦人" },
+              { name: "王彥雯", role: "NTU HDAS", note: "" },
+              { name: "王佳惠", role: "台杉生技基金投資協理", note: "EMHA 107 校友" },
+              { name: "杜裕康", role: "NTU 流預所教授", note: "" },
+            ].map((j, i) => (
+              <div key={i} className="flex items-center gap-2.5">
+                <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-violet-500/25 to-violet-500/5 flex items-center justify-center text-violet-400 text-[11px] font-bold border border-violet-500/15">
+                  {j.name[0]}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium leading-tight">{j.name}</p>
+                  <p className="text-[10px] text-muted-foreground truncate">{j.role}{j.note ? ` · ${j.note}` : ''}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div variants={item} className="rounded-xl glass-card overflow-hidden">
+          <div className="px-4 py-3 flex items-center gap-2 border-b border-border/20">
+            <GraduationCap className="h-3.5 w-3.5 text-emerald-400" />
+            <span className="font-mono text-[10px] text-emerald-400 tracking-[0.15em] uppercase">指導老師 · Day 1</span>
+          </div>
+          <div className="p-3 space-y-2">
+            {[
+              { name: "杜維州", role: "", note: "" },
+              { name: "林嶔", role: "", note: "" },
+              { name: "劉致宏", role: "Microsoft Taiwan 總監", note: "健康與醫療產業" },
+            ].map((m, i) => (
+              <div key={i} className="flex items-center gap-2.5">
+                <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-emerald-500/25 to-emerald-500/5 flex items-center justify-center text-emerald-400 text-[11px] font-bold border border-emerald-500/15">
+                  {m.name[0]}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium leading-tight">{m.name}</p>
+                  {m.role && <p className="text-[10px] text-muted-foreground truncate">{m.role}{m.note ? ` · ${m.note}` : ''}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
 
       {/* Venue Rules */}
       <motion.div variants={item} className="rounded-xl glass-card overflow-hidden">
