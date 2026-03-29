@@ -449,7 +449,7 @@ const OverviewTab = () => {
             {[
               { value: "137", label: "報名", icon: Users },
               { value: "~42", label: "團隊", icon: TrendingUp },
-              { value: "3-4", label: "評審", icon: CheckCircle2 },
+              { value: "4", label: "評審", icon: CheckCircle2 },
               { value: "3", label: "導師", icon: Zap },
             ].map((s, i) => (
               <motion.div
