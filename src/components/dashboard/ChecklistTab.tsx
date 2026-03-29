@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FileText, Monitor, Coffee, PartyPopper } from "lucide-react";
+import { FileText, Monitor, Coffee, PartyPopper, ClipboardCheck } from "lucide-react";
 
 interface ChecklistSection {
   title: string;
@@ -11,16 +11,38 @@ interface ChecklistSection {
 
 const sections: ChecklistSection[] = [
   {
+    title: "活動前確認",
+    icon: <ClipboardCheck className="h-3.5 w-3.5 text-activity-critical" />,
+    items: [
+      "場地走一遍（4/9 傍晚）",
+      "Zoom 連結測試",
+      "Google Drive 資料夾建立 + 測試上傳",
+      "WiFi 密碼確認",
+      "冷氣確認（Day 2 週六）",
+      "用餐教室確認（215?）",
+      "建築出入時間確認",
+      "急救包準備",
+      "Keynote 影片下載 + 測試播放",
+    ],
+  },
+  {
     title: "文件 / 印刷品",
     icon: <FileText className="h-3.5 w-3.5 text-activity-session" />,
     items: [
-      "名牌（137 + 備用）按 4 組分裝",
-      "參賽者手冊",
+      "名牌（137 + 備用）按 4 組號碼分裝",
+      "參賽者手冊（時程 + 評分 + WiFi + 聯絡方式）",
       "團隊登記表",
-      "紙本評分表 ~170 張",
+      "紙本評分表（每隊 1 張 × 4 評審 = ~170 張）",
       "簡報順序看板",
-      "證書模板",
-      "指示牌（全套）",
+      "證書：參賽者（Day 1 後印）",
+      "證書：獲獎模板 × 3（Day 2 填寫）",
+      "評審名牌 + 評審座位標示",
+      "指示牌：捷運→大樓→201→用餐教室",
+      "WiFi 密碼牌（大字）",
+      "時程表海報",
+      "「簡報 12:00 截止」標示（Day 2 用）",
+      "「徵求成員」標示牌（團隊配對用）",
+      "團隊號碼籤（抽籤用）",
     ],
   },
   {
@@ -29,21 +51,25 @@ const sections: ChecklistSection[] = [
     items: [
       "主筆電 + 充電器",
       "備用筆電 + 充電器",
-      "HDMI + USB-C 轉接",
-      "無線麥克風 + 電池",
-      "可攜式音響",
-      "計時器",
-      "USB 隨身碟",
-      "延長線 + 多孔插座",
+      "HDMI + USB-C 轉接頭",
+      "無線麥克風 + 備用電池",
+      "可攜式音響（備用）",
+      "計時器顯示裝置（平板/手機）",
+      "USB 隨身碟（簡報備份）",
+      "延長線 × 2 + 多孔插座",
+      "計時鈴/鐘（2:30 警示 + 3:00 截止）",
     ],
   },
   {
-    title: "餐飲",
+    title: "餐飲 / 物資",
     icon: <Coffee className="h-3.5 w-3.5 text-activity-break" />,
     items: [
-      "咖啡/茶 + 點心",
-      "杯子 · 餐巾紙",
-      "午餐自行安排（確認）",
+      "咖啡/茶（兩天份）",
+      "點心/餅乾（兩天份）",
+      "杯子 · 餐巾紙 · 攪拌棒",
+      "走廊桌子（茶點站用）",
+      "垃圾袋",
+      "文具：麥克筆、便利貼、白紙（每桌）",
     ],
   },
 ];

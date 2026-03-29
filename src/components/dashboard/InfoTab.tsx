@@ -170,6 +170,34 @@ const InfoTab = () => {
         <p className="text-xs text-muted-foreground mt-1">台北市中正區徐州路 17 號</p>
         <p className="text-[10px] text-muted-foreground mt-0.5">捷運公館站 → 步行約 10 分鐘</p>
       </motion.div>
+
+      {/* Nearby Food */}
+      <motion.div variants={item} className="rounded-xl glass-card p-4">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-base">🍜</span>
+          <span className="font-mono text-[10px] text-amber-400 tracking-[0.15em] uppercase">NEARBY FOOD</span>
+          <span className="text-[9px] text-muted-foreground ml-1">（參賽者會問）</span>
+        </div>
+        <div className="space-y-1.5 text-xs text-muted-foreground">
+          <p>• 7-11 / 全家 — 羅斯福路上，步行 3 分鐘</p>
+          <p>• 公館商圈 — 步行 5–10 分鐘，各類餐廳</p>
+          <p>• 台大學生餐廳（小福） — 步行 8 分鐘</p>
+          <p>• Foodpanda / Uber Eats — 可外送至大樓門口</p>
+        </div>
+      </motion.div>
+
+      {/* First Aid */}
+      <motion.div variants={item} className="rounded-xl glass-card p-4">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-base">🩹</span>
+          <span className="font-mono text-[10px] text-rose-400 tracking-[0.15em] uppercase">FIRST AID</span>
+        </div>
+        <div className="space-y-1 text-xs text-muted-foreground">
+          <p>• 急救包位置：報到桌旁（Helper B 管理）</p>
+          <p>• 內容：OK 繃、紗布、消毒液、止痛藥</p>
+          <p>• 嚴重狀況：撥打 119 或送台大醫院急診</p>
+        </div>
+      </motion.div>
     </motion.div>
   );
 };
