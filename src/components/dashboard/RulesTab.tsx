@@ -11,12 +11,16 @@ const item = {
 };
 
 const judgingCriteria = [
-  { name: "問題定義", en: "Challenge", score: 5, desc: "問題是否清楚、根因是否掌握、是否具急迫性" },
-  { name: "技術與創新", en: "Tech & Innovation", score: 5, desc: "方案是否新穎、是否有潛力改善健康系統" },
-  { name: "實施可行性", en: "Implementation", score: 5, desc: "是否考慮障礙、商業模式、利害關係人" },
-  { name: "團隊", en: "Team", score: 5, desc: "技能組合與執行態度" },
-  { name: "簡報", en: "Pitch", score: 5, desc: "表達清晰度、視覺輔助、下一步計畫" },
-  { name: "問答", en: "Q&A", score: 5, desc: "能否回應評審提問並捍衛方案" },
+  { name: "問題定義", en: "Problem & Framing", score: 2, desc: "問題是否清楚定義、量測與框架" },
+  { name: "價值主張", en: "Value & Innovation", score: 2, desc: "方案是否新穎、價值主張是否具說服力" },
+  { name: "市場機會", en: "Opportunity", score: 2, desc: "目標市場是否明確、是否有驗證需求的證據" },
+  { name: "競爭分析", en: "Competition", score: 2, desc: "是否了解競爭者、差異化定位是否清楚" },
+  { name: "商業模式", en: "Business Model", score: 2, desc: "商業模式是否可行、可擴展" },
+  { name: "市場策略", en: "GTM Strategy", score: 2, desc: "如何觸及用戶、客戶與利害關係人" },
+  { name: "資金需求", en: "Ask", score: 2, desc: "資金需求、里程碑、條件是否清楚" },
+  { name: "團隊", en: "Team", score: 2, desc: "技能互補、角色分工是否明確" },
+  { name: "簡報", en: "Presentation", score: 2, desc: "表達是否清晰、有信心、具說服力" },
+  { name: "問答", en: "Q&A", score: 2, desc: "能否有效回應評審提問" },
 ];
 
 const teamRules = [
@@ -30,7 +34,9 @@ const teamRules = [
 const pitchRules = [
   "簡報語言：中文或英文，團隊自選",
   "簡報格式：PPT / Google Slides / Canva / Keynote 皆可，需匯出為 PDF",
-  "時間：3 分鐘簡報 + 30 秒 Q&A + 30 秒緩衝 = 4 分鐘",
+  "時間：3 分鐘簡報 + 1.5 分鐘 Q&A + 0.5 分鐘緩衝 = 5 分鐘",
+  "HSIL 標準為 8 分鐘（3+5），因團隊數多調整為 5 分鐘",
+  "建議簡報 8 頁：問題→方案→市場→競爭→商模→GTM→Ask→團隊",
   "AI 工具（ChatGPT、Claude 等）可使用，無需聲明",
   "Day 1 至 Day 2 之間可遠端作業，無限制",
   "簡報截止：Day 2 12:00（上傳 PDF 至 Google Drive）",
@@ -58,29 +64,18 @@ const RulesTab = () => {
         <div className="px-4 py-3 flex items-center gap-2 border-b border-border/20">
           <Scale className="h-3.5 w-3.5 text-violet-400" />
           <span className="font-mono text-[10px] text-violet-400 tracking-[0.15em] uppercase">JUDGING RUBRIC</span>
-          <span className="ml-auto font-mono text-xs text-primary font-bold">30 分</span>
+          <span className="ml-auto font-mono text-xs text-primary font-bold">20 分</span>
         </div>
         <div className="p-3">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
             {judgingCriteria.map((c, i) => (
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.02, y: -2 }}
                 className="rounded-lg bg-card/60 border border-border/30 p-3 text-center cursor-default"
               >
-                <div className="relative mx-auto w-10 h-10 mb-2">
-                  <svg className="w-10 h-10 -rotate-90" viewBox="0 0 40 40">
-                    <circle cx="20" cy="20" r="16" fill="none" stroke="hsl(var(--border))" strokeWidth="3" />
-                    <circle
-                      cx="20" cy="20" r="16" fill="none"
-                      stroke="hsl(var(--primary))"
-                      strokeWidth="3"
-                      strokeDasharray={`${16 * 2 * Math.PI}`}
-                      strokeDashoffset="0"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-primary">{c.score}</span>
+                <div className="flex items-center justify-center mb-2">
+                  <span className="text-lg font-bold text-primary font-mono">/2</span>
                 </div>
                 <p className="text-xs font-semibold">{c.name}</p>
                 <p className="text-[9px] text-muted-foreground italic">{c.en}</p>
@@ -105,7 +100,7 @@ const RulesTab = () => {
             </div>
             <span className="text-muted-foreground/30">+</span>
             <div className="flex-1 rounded-lg bg-sky-500/15 border border-sky-500/20 p-2 text-center">
-              <p className="text-lg font-bold text-sky-400">0:30</p>
+              <p className="text-lg font-bold text-sky-400">1:30</p>
               <p className="text-[9px] text-muted-foreground">Q&A</p>
             </div>
             <span className="text-muted-foreground/30">+</span>
@@ -115,7 +110,7 @@ const RulesTab = () => {
             </div>
             <span className="text-muted-foreground/30">=</span>
             <div className="flex-1 rounded-lg bg-primary/15 border border-primary/20 p-2 text-center">
-              <p className="text-lg font-bold text-primary">4:00</p>
+              <p className="text-lg font-bold text-primary">5:00</p>
               <p className="text-[9px] text-muted-foreground">每隊</p>
             </div>
           </div>
